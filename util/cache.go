@@ -11,7 +11,7 @@ import (
 	"errors"
 )
 
-func RunShell(cmd string) (string, error) {
+func Exec(cmd string) (string, error) {
     command := exec.Command("sh", "-c", cmd)
 
     var stdout bytes.Buffer
