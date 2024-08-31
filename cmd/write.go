@@ -17,9 +17,9 @@ func IsPiped() bool {
 
 var writeCmd = &cobra.Command{
 	Use:   "write",
-	Short: "Write to cache",
-	Long: `Write to cache
-	cacheup write <name> <content>
+	Short: "Write stdin to cache",
+	Long: `Write stdin to cache
+	./heavy_command.sh | cacheup write <name>
 	curl http://example.com | cacheup -f ~/custom/cache/folder/ write <name>
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -34,10 +34,8 @@ var writeCmd = &cobra.Command{
 			content_bytes, err := io.ReadAll(os.Stdin)
 			if err != nil { return err }
 			content = string(content_bytes)
-		} else if len(args) > 1 {
-			content = strings.Join(args[1:], " ")
 		} else {
-			return errors.New("provide content to write from either stdin or arguments")
+			return errors.New("provide content to write through stdin")
 		}
 
 		err := util.SetContent(name, cache_path_flag, content)
