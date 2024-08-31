@@ -5,11 +5,15 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/zcag/cacheup/util"
 )
 
 var (
 	cache_path_flag string
 	cache_max_age_flag string
+	name string
+
+	cache_location string
 )
 
 
@@ -23,6 +27,13 @@ var rootCmd = &cobra.Command{
 			if err != nil { return errors.New("Error getting user's cache folder") }
 			cache_path_flag = cache_dir+"/cacheup/"
 		}
+
+		if cache_path_flag[len(cache_path_flag)-1] != os.PathSeparator && len(args) < 1 { 
+			return errors.New("provice cache name or full file path with -f")
+		}
+
+		name = ""
+		if len(args) > 0 { name = args[0] }
 
 		return nil
 	},

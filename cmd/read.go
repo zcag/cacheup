@@ -26,12 +26,6 @@ var readCmd = &cobra.Command{
 	cacheup read <name> -t 30m -c "~/some/script.sh"
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ok := util.ValidateArgOrFullPath(args, cache_path_flag)
-		if !ok { return errors.New("provide cache name or full file path with -f") }
-
-		name := ""
-		if len(args) > 0 { name = args[0] }
-
 	  if command_flag != "" {
 			valid, err := util.IsCacheValid(name, cache_path_flag, cache_max_age_flag)
 			if err != nil { return err }

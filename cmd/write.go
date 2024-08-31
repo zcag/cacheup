@@ -4,7 +4,6 @@ import (
 	"errors"
 	"io"
 	"os"
-	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/zcag/cacheup/util"
@@ -21,24 +20,18 @@ var writeCmd = &cobra.Command{
 	Long: `Write stdin to cache
 	./heavy_command.sh | cacheup write <name>
 	curl http://example.com | cacheup -f ~/custom/cache/folder/ write <name>
+	curl http://example.com | cacheup -f ~/custom/cache/file write
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if len(args) == 0 {
-			return errors.New("Provide the name of cache as first argument")
-		}
-		var name string = args[0]
-
-		var content string
 		stat, _ := os.Stdin.Stat()
-		if (stat.Mode() & os.ModeCharDevice) == 0 {
-			content_bytes, err := io.ReadAll(os.Stdin)
-			if err != nil { return err }
-			content = string(content_bytes)
-		} else {
+		if (stat.Mode() & os.ModeCharDevice) != 0 {
 			return errors.New("provide content to write through stdin")
 		}
 
-		err := util.SetContent(name, cache_path_flag, content)
+		content_bytes, err := io.ReadAll(os.Stdin)
+		if err != nil { return err }
+
+		err = util.SetContent(name, cache_path_flag, string(content_bytes))
 		if err != nil { return err }
 
 		return nil
