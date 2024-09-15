@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"errors"
 
 	"github.com/spf13/cobra"
 	"github.com/zcag/cacheup/util"
@@ -16,7 +15,7 @@ var readCmd = &cobra.Command{
 	Use:   "read",
 	Short: "Read cached value",
 	Long: `Read cached value
-	cacheup read <name> 
+	cacheup read <name>
 	cacheup read <name> -f ~/custom/cache/
 	cacheup read -f ~/custom/cache/file.json
 

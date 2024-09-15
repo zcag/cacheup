@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/zcag/cacheup/util"
 )
 
 var (
@@ -28,8 +27,8 @@ var rootCmd = &cobra.Command{
 			cache_path_flag = cache_dir+"/cacheup/"
 		}
 
-		if cache_path_flag[len(cache_path_flag)-1] != os.PathSeparator && len(args) < 1 { 
-			return errors.New("provice cache name or full file path with -f")
+		if cache_path_flag[len(cache_path_flag)-1] != os.PathSeparator && len(args) < 1 {
+			return errors.New("provide cache name or full file path with -f")
 		}
 
 		name = ""
@@ -46,13 +45,13 @@ func Execute() {
 	}
 }
 
-func init() { 
+func init() {
 	rootCmd.PersistentFlags().StringVarP(
 		&cache_path_flag,
 		"cache-path",
 		"f",
 		"",
-		`custom location for cache path for parent directory or file. directory paths should end with '/' 
+		`custom location for cache path for parent directory or file. directory paths should end with '/'
 		(default: $XDG_CACHE_HOME/cacheup/<name>)`,
 	)
 	rootCmd.PersistentFlags().StringVarP(
