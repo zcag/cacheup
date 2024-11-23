@@ -27,7 +27,7 @@ var rootCmd = &cobra.Command{
 			cache_path_flag = cache_dir+"/cacheup/"
 		}
 
-		if cache_path_flag[len(cache_path_flag)-1] != os.PathSeparator && len(args) < 1 {
+		if cache_path_flag[len(cache_path_flag)-1] == os.PathSeparator && len(args) < 1 {
 			return errors.New("provide cache name or full file path with -f")
 		}
 
