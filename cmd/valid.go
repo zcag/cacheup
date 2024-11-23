@@ -17,7 +17,7 @@ var validCmd = &cobra.Command{
 	cacheup read -f ~/custom/cache/file.json`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		valid, err := util.IsCacheValid(name, cache_path_flag, cache_max_age_flag)
-		if err != nil { return nil }
+		if err != nil { return err }
 
 		if valid {
 			fmt.Println("true")
